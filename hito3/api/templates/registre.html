@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro Exitoso</title>
+</head>
+<body>
+    <h1>¡Registro Exitoso!</h1>
+    <p>El usuario <strong>{{ username }}</strong> ha sido registrado con éxito.</p>
+    <p><a href="{% url 'user_login' %}">Iniciar sesión</a></p>
+    
+    <!-- Aquí incluimos el formulario con el token CSRF -->
+    <form method="post" action="{%  url 'inicio'%}">
+        {% csrf_token %}
+
+    </form>
+</body>
+</html>

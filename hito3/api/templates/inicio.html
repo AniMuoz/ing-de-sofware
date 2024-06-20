@@ -1,0 +1,118 @@
+{% load static %}
+
+<!-- compra.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles de Campaña</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'api/styles.css' %}">
+</head>
+<body>
+    <!-- Barra de Navegación -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <!-- Título -->
+            <a class="navbar-brand" href="#">ADVANCE</a>
+            <!-- Espacio flexible -->
+            <div class="flex-grow-1"></div>
+            {% if user.is_authenticated %}
+            <a class="navbar-brand ml-auto" href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-basket" viewBox="0 0 16 16">
+                    <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217L5.07 1.243a.5.5 0 0 1 .686-.172zM2 9v4.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V9zM1 7v1h14V7zm3 3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 4 10m2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 6 10m2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 8 10m2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 10 10m2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5"/>
+                  </svg> 
+            </a>
+            <!-- Imagen a la derecha -->
+            <a class="navbar-brand" href="{% url 'profile.html' %}">
+                <img src="https://media1.tenor.com/m/X-hSKfubxwAAAAAC/cristiano-ronaldo-wink.gif" alt="Imagen Derecha" height="30">
+            </a>| <a href="{% url 'user_logout' %}">Cerrar sesión</a></p>
+            {% else %}
+                <button id="add-to-cart-btn" class="btn btn-primary">
+                    <a href="{% url 'iniciar_sesion' %}">Cliente</a>
+                </button>
+                <button id="specification-btn" class="btn btn-primary">
+                    <a href="{% url 'login_empresa.html' %}">Empresa</a>
+                </button>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="campaign-details text-center mt-5">
+            <!-- Primer bloque -->
+            <div class="campaign-item text-left">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQT492n8W1jJP2ghTcYSaaaOM9vqY8g-qmVtw&s" alt="Descripción de la campaña" class="img-fluid" width="200" height="300">
+                <p>campañas política</p>
+            </div>
+
+            <!-- Segundo bloque -->
+            <div class="campaign-item text-right" style="margin-top: -100px;">
+                <img src="https://americaretail-malls.com/wp-content/uploads/2024/03/cerveza-cristal-obi-wan-kenobi-star-wars-e1709929362600.jpg" alt="Descripción de la campaña" class="img-fluid" width="200" height="300">
+                <p>campañas televisiva</p>
+            </div>
+
+            <!-- Tercer bloque -->
+            <div class="campaign-item text-left">
+                <img src="https://m.media-amazon.com/images/M/MV5BZDJmMzdmM2ItZWFlYi00OTFkLTgxNDEtYmIwOTlkZjNmYzY0XkEyXkFqcGdeQXVyMTA0MTM5NjI2._V1_.jpg" alt="Descripción de la campaña" class="img-fluid" width="200" height="300">
+                <p>campañas urbanas</p>
+            </div>
+
+            <!-- Cuarto bloque -->
+            <div class="campaign-item text-right" style="margin-top: -85px;">
+                <img src="https://rtvc-assets-radionica3.s3.amazonaws.com/s3fs-public/inline-images/Orson%20Welles.webp" alt="Descripción de la campaña" class="img-fluid" width="200" height="300">
+                <p>campañas radiales</p>
+            </div>
+
+            <!-- Quinto bloque -->
+            <div class="campaign-item">
+                <img src="https://pbs.twimg.com/media/FnLtRm7XEBIMdsa.jpg" alt="Descripción de la campaña" class="img-fluid" width="200" height="300">
+                <p>campañas intervención urbana</p>
+            </div>
+        </div>
+    </div>
+
+    {% if user.is_authenticated %}
+    <!-- Botones al final de la página -->
+    <div class="container mt-5">
+        <div class="text-center">
+            <div class="row justify-content-center">
+                <div class="col-md-3">
+                    <button class="btn btn-primary btn-lg btn-block mb-3">
+                        <a class="navbar-brand" href="{% url 'compraz.html' %}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag" viewBox="0 0 16 16">
+                                <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/>
+                            </svg>
+                            Comprar Campaña
+                        </a>
+                    </button>
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-primary btn-lg btn-block mb-3">
+                        <a class="navbar-brand" href="{% url 'compra.html' %}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-database-fill" viewBox="0 0 16 20">
+                                <path d="M3.904 1.777C4.978 1.289 6.427 1 8 1s3.022.289 4.096.777C13.125 2.245 14 2.993 14 4s-.875 1.755-1.904 2.223C11.022 6.711 9.573 7 8 7s-3.022-.289-4.096-.777C2.875 5.755 2 5.007 2 4s.875-1.755 1.904-2.223"/>
+                                <path d="M2 6.161V7c0 1.007.875 1.755 1.904 2.223C4.978 9.71 6.427 10 8 10s3.022-.289 4.096-.777C13.125 8.755 14 8.007 14 7v-.839c-.457.432-1.004.751-1.49.972C11.278 7.693 9.682 8 8 8s-3.278-.307-4.51-.867c-.486-.22-1.033-.54-1.49-.972"/>
+                                <path d="M2 9.161V10c0 1.007.875 1.755 1.904 2.223C4.978 12.711 6.427 13 8 13s3.022-.289 4.096-.777C13.125 11.755 14 11.007 14 10v-.839c-.457.432-1.004.751-1.49.972-1.232.56-2.828.867-4.51.867s-3.278-.307-4.51-.867c-.486-.22-1.033-.54-1.49-.972"/>
+                                <path d="M2 12.161V13c0 1.007.875 1.755 1.904 2.223C4.978 15.711 6.427 16 8 16s3.022-.289 4.096-.777C13.125 14.755 14 14.007 14 13v-.839c-.457.432-1.004.751-1.49.972-1.232.56-2.828.867-4.51.867s-3.278-.307-4.51-.867c-.486-.22-1.033-.54-1.49-.972"/>
+                            </svg>
+                            Ver Mis Campañas
+                        </a>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Bootstrap JS y jQuery (necesarios para el modal) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Custom JS -->
+    <script src="scripts.js"></script>
+</body>
+</html>
