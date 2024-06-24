@@ -26,9 +26,15 @@ SECRET_KEY = 'django-insecure-t1686m$!=3*9_7ph^ktyb7w9fr+pu900p@x(z1l^+m(_ta$941
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1',
+    'localhost',
+    
+    '5559-201-223-170-134.ngrok-free.app']
 
-
+CSRF_TRUSTED_ORIGINS = [
+    'https://5559-201-223-170-134.ngrok-free.app',
+    # otros orígenes de confianza...
+]
 # Application definition
 
 INSTALLED_APPS = [
@@ -85,6 +91,8 @@ DATABASES = {
     }
 }
 
+AUTH_USER_MODEL = 'auth.user'
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -129,3 +137,8 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',  # Mantén el backend predeterminado
+    'api.backends.RUTAuthenticationBackend',  # Agrega tu backend personalizado
+]

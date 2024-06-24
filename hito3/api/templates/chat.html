@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat de Ayuda</title>
+    <style>
+        .chat-bubble {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            font-size: 18px;
+        }
+
+        .chat-container {
+            display: none;
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 300px;
+            max-width: 100%;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-header {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            font-size: 16px;
+        }
+
+        .chat-body {
+            padding: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .chat-footer {
+            padding: 10px;
+            border-top: 1px solid #ccc;
+        }
+
+        .chat-footer input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .message {
+            margin: 10px 0;
+        }
+
+        .message.employee {
+            text-align: left;
+        }
+
+        .message.employee p {
+            background-color: #f1f1f1;
+            display: inline-block;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .message.user {
+            text-align: right;
+        }
+
+        .message.user p {
+            background-color: #007bff;
+            color: white;
+            display: inline-block;
+            padding: 10px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-bubble" onclick="toggleChat()">¿Necesitas ayuda?</div>
+
+    <div class="chat-container" id="chatContainer">
+        <div class="chat-header">
+            Chat de Ayuda
+        </div>
+        <div class="chat-body" id="chatBody">
+            <div class="message employee">
+                <p>Hola Bienvenido. Me puedes decir cual es tu duda</p>
+            </div>
+            <div class="message user">
+                <p>Se podría saber como se llevara acabo la campaña :D</p>
+            </div>
+            <div class="message employee">
+                <p>Si<br>Dando click en el nombre de la campaña se abrirá una pestaña donde saldrán los detalles y el costo de las mismas<br>Si tiene alguna especificación aparte puede darle click al botón de especificaciones y escribirlas.<br>¿Tiene alguna otra duda?</p>
+            </div>
+        </div>
+        <div class="chat-footer">
+            <input type="text" placeholder="Escribe tu mensaje..." onkeypress="sendMessage(event)">
+        </div>
+    </div>
+
+    <script>
+        function toggleChat() {
+            const chatContainer = document.getElementById('chatContainer');
+            chatContainer.style.display = chatContainer.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function sendMessage(event) {
+            if (event.key === 'Enter') {
+                const messageInput = event.target;
+                const messageText = messageInput.value;
+                if (messageText.trim() !== '') {
+                    const chatBody = document.getElementById('chatBody');
+                    const messageDiv = document.createElement('div');
+                    messageDiv.classList.add('message', 'user');
+                    const messageContent = document.createElement('p');
+                    messageContent.textContent = messageText;
+                    messageDiv.appendChild(messageContent);
+                    chatBody.appendChild(messageDiv);
+                    chatBody.scrollTop = chatBody.scrollHeight;
+                    messageInput.value = '';
+                }
+            }
+        }
+    </script>
+</body>
+</html>

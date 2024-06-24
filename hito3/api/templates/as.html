@@ -1,0 +1,280 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles de Campaña</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- jQuery (Necesario para Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="{% static 'api/styles.css' %}">
+
+
+    <style>
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+      
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -60px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+      
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Estilos para el globo de texto tipo chat */
+        .chat-bubble {
+            position: relative;
+            background: #f1f1f1;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .chat-bubble::after {
+            content: '';
+            position: absolute;
+            border-style: solid;
+            border-width: 10px 10px 10px 0;
+            border-color: transparent #f1f1f1 transparent transparent;
+            display: block;
+            width: 0;
+            z-index: 1;
+            left: -10px;
+            top: 10px;
+        }
+
+        .chat-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .chat-popup {
+            display: none;
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 300px;
+            max-width: 100%;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-header {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            font-size: 16px;
+        }
+
+        .chat-body {
+            padding: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .chat-footer {
+            padding: 10px;
+            border-top: 1px solid #ccc;
+        }
+
+        .chat-footer input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .message {
+            margin: 10px 0;
+        }
+
+        .message.employee {
+            text-align: left;
+        }
+
+        .message.employee p {
+            background-color: #f1f1f1;
+            display: inline-block;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .message.user {
+            text-align: right;
+        }
+
+        .message.user p {
+            background-color: #007bff;
+            color: white;
+            display: inline-block;
+            padding: 10px;
+            border-radius: 10px;
+        }
+    </style>
+               
+           <!-- Botón "Agregar al Carro" modificado -->
+           <div class="dropdown">
+            <button id="add-to-cart-btn" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                Agregar al Carro
+            </button>
+            <div class="dropdown-menu p-3">
+                
+                <button id="cart-confirm-btn" class="btn btn-success btn-block mt-3">Confirmar</button>
+            </div>
+        </div>
+
+        <!-- Botón "Especificaciones" modificado -->
+        <div class="dropdown mt-3">
+            <button id="specification-btn" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                Especificaciones
+            </button>
+            <div class="dropdown-menu p-3">
+                <textarea id="specification-textarea" class="form-control" placeholder="Escribe aquí tus especificaciones"></textarea>
+                <button id="specification-confirm-btn" class="btn btn-success btn-block mt-3">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div class="modal" id="payment-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Pagar</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <!-- Agrega aquí los campos para el pago -->
+                    <button id="pay-btn" class="btn btn-success btn-block">Pagar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</table>
+<div class="tabs">
+    <ul class="nav justify-content-center">
+        
+        <li class="nav-item chat-container">
+            <div class="chat-bubble" onclick="toggleChat()">
+                ¿Tienes Dudas?
+            </div>
+        </li>
+    </ul>
+</div>
+<div class="chat-popup" id="chatPopup">
+    <div class="chat-header">
+        Chat de Ayuda
+    </div>
+    <div class="chat-body" id="chatBody">
+        <div class="message employee">
+            <p>Hola Bienvenido. Me puedes decir cual es tu duda</p>
+        </div>
+        <div class="message user">
+            <p>Se podría saber como se llevara acabo la campaña :D</p>
+        </div>
+        <div class="message employee">
+            <p>Si<br>Dando click en el nombre de la campaña se abrirá una pestaña donde saldrán los detalles y el costo de las mismas<br>Si tiene alguna especificación aparte puede darle click al botón de especificaciones y escribirlas.<br>¿Tiene alguna otra duda?</p>
+        </div>
+    </div>
+    <div class="chat-footer">
+        <input type="text" placeholder="Escribe tu mensaje..." onkeypress="sendMessage(event)">
+    </div>
+</div>
+</div>
+</main>
+
+<script>
+
+$(document).ready(function() {
+            // Mostrar/desplegar el contenido del carrito
+            $('#add-to-cart-btn').click(function() {
+                $('#cart-textarea').val(''); // Limpiar el textarea al abrir
+                $('.dropdown-toggle').dropdown('toggle'); // Toggle del dropdown
+            });
+
+            // Mostrar/desplegar el contenido de especificaciones
+            $('#specification-btn').click(function() {
+                $('#specification-textarea').val(''); // Limpiar el textarea al abrir
+                $('.dropdown-toggle').dropdown('toggle'); // Toggle del dropdown
+            });
+
+            // Confirmar el texto ingresado para el carrito
+            $('#cart-confirm-btn').click(function() {
+                var cartText = $('#cart-textarea').val();
+                alert('Texto ingresado para el carrito:\n' + cartText); // Aquí puedes hacer lo que desees con el texto ingresado
+                $('.dropdown-toggle').dropdown('toggle'); // Cerrar el dropdown después de confirmar
+            });
+
+            // Confirmar el texto ingresado para las especificaciones
+            $('#specification-confirm-btn').click(function() {
+                var specText = $('#specification-textarea').val();
+                alert('Especificaciones ingresadas:\n' + specText); // Aquí puedes hacer lo que desees con las especificaciones ingresadas
+                $('.dropdown-toggle').dropdown('toggle'); // Cerrar el dropdown después de confirmar
+            });
+        });
+function toggleChat() {
+const chatPopup = document.getElementById('chatPopup');
+chatPopup.style.display = chatPopup.style.display === 'none' || chatPopup.style.display === '' ? 'block' : 'none';
+}
+
+function sendMessage(event) {
+if (event.key === 'Enter') {
+    const input = event.target;
+    const message = input.value;
+    if (message.trim() !== '') {
+        const chatBody = document.getElementById('chatBody');
+        const userMessage = document.createElement('div');
+        userMessage.className = 'message user';
+        userMessage.innerHTML = `<p>${message}</p>`;
+        chatBody.appendChild(userMessage);
+        input.value = '';
+        chatBody.scrollTop = chatBody.scrollHeight;
+    }
+}
+}
+</script>
+
+<!-- Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+</div>
+</main>
+</body>
+</html>
